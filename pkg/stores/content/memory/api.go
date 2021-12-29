@@ -28,7 +28,7 @@ func (receiver *store) RetrieveContent(id string) (io.Reader, error) {
 	return bytes.NewReader(raw), nil
 }
 
-func NewContentStore() stores.ContentStore {
+func New() stores.ContentStore {
 	return &store{
 		db: make(map[string][]byte),
 	}
