@@ -28,17 +28,19 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 		post.Id = uuid.New().String()
 		post.Time = time.Now().String()
 
-		err = postStore.AddPost(post)
+		err = contentStore.StoreContent(
+			post.Id,
+			bytes.NewBuffer([]byte(post.Content)),
+		)
 		if err != nil {
 			c.Status(http.StatusInternalServerError)
 
 			return
 		}
 
-		err = contentStore.StoreContent(
-			post.Id,
-			bytes.NewBuffer([]byte(post.Content)),
-		)
+		post.Content = truncateContent(post.Content)
+
+		err = postStore.AddPost(post)
 		if err != nil {
 			c.Status(http.StatusInternalServerError)
 
@@ -50,8 +52,17 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 }
 
 // GetPosts -
-func GetPosts(postStore stores.PostStore, contentStore stores.ContentStore) gin.HandlerFunc {
+func GetPosts(postStore stores.PostStore, _ stores.ContentStore) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{})
+		filter := stores.Filter{}
+
+		posts, err := postStore.GetAllPosts(filter)
+		if err != nil {
+			c.Status(http.StatusInternalServerError)
+
+			return
+		}
+
+		c.JSON(http.StatusOK, posts)
 	}
 }
