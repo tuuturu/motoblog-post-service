@@ -24,7 +24,7 @@ type Route struct {
 type Routes []Route
 
 // NewRouter returns a new router.
-func NewRouter() *gin.Engine {
+func NewRouter(_ Config) *gin.Engine {
 	router := gin.Default()
 	for _, route := range routes {
 		switch route.Method {
