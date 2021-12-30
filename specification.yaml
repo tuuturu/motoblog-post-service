@@ -25,9 +25,18 @@ paths:
       tags:
         - collection
       description: Create a post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
       responses:
         201:
-          description: Successfully created a post
+          description: The newly created post including assigned ID and timestamp
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
         401:
           $ref: '#/components/responses/401'
         403:
@@ -97,6 +106,7 @@ components:
           type: string
           description: An ID uniquely identifying a post
           example: cb21cff0-bd76-46c7-98b7-f9fa545714e8
+          readOnly: true
         title:
           type: string
           description: The title of the post
@@ -105,6 +115,7 @@ components:
           type: string
           description: The date and time the post was submitted in ISO 8601 format
           example: 2019-09-26T07:58:30.996+0200
+          readOnly: true
         content:
           type: string
           description: The content of the post

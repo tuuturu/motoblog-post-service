@@ -47,7 +47,7 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 			return
 		}
 
-		c.JSON(http.StatusCreated, gin.H{})
+		c.JSON(http.StatusCreated, post)
 	}
 }
 
