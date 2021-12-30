@@ -21,4 +21,5 @@ type PostStore interface {
 type ContentStore interface {
 	StoreContent(id string, content io.Reader) error
 	RetrieveContent(id string) (io.Reader, error)
+	DeleteContent(id string) error
 }

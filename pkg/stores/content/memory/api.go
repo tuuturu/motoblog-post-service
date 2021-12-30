@@ -28,6 +28,17 @@ func (receiver *store) RetrieveContent(id string) (io.Reader, error) {
 	return bytes.NewReader(raw), nil
 }
 
+func (receiver *store) DeleteContent(id string) error {
+	_, ok := receiver.db[id]
+	if !ok {
+		return stores.ErrNotFound
+	}
+
+	delete(receiver.db, id)
+
+	return nil
+}
+
 func New() stores.ContentStore {
 	return &store{
 		db: make(map[string][]byte),
