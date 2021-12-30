@@ -46,7 +46,13 @@ func GetPost(postStore stores.PostStore, contentStore stores.ContentStore) gin.H
 
 		post, err := postStore.GetPost(id)
 		if err != nil {
-			c.Status(http.StatusInternalServerError)
+			status := http.StatusInternalServerError
+
+			if errors.Is(err, stores.ErrNotFound) {
+				status = http.StatusNotFound
+			}
+
+			c.Status(status)
 
 			return
 		}
