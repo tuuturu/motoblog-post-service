@@ -8,27 +8,43 @@ import (
 	"github.com/deifyed/post-service/pkg/core/entrypoints"
 	"github.com/deifyed/post-service/pkg/stores"
 	contentMemoryStore "github.com/deifyed/post-service/pkg/stores/content/memory"
+	postMemoryStore "github.com/deifyed/post-service/pkg/stores/post/memory"
 )
 
 // NewRouter returns a new router.
 func NewRouter(_ Config) *gin.Engine {
 	router := gin.Default()
 
+	postStore := postMemoryStore.New()
 	contentStore := contentMemoryStore.New()
 
 	for _, route := range routes {
 		switch route.Method {
 		case http.MethodGet:
-			router.GET(route.Pattern, route.HandlerGenerator(nil, contentStore))
+			router.GET(route.Pattern, route.HandlerGenerator(
+				postStore,
+				contentStore,
+			))
 		case http.MethodPost:
-			router.POST(route.Pattern, route.HandlerGenerator(nil, contentStore))
-
+			router.POST(route.Pattern, route.HandlerGenerator(
+				postStore,
+				contentStore,
+			))
 		case http.MethodPut:
-			router.PUT(route.Pattern, route.HandlerGenerator(nil, contentStore))
+			router.PUT(route.Pattern, route.HandlerGenerator(
+				postStore,
+				contentStore,
+			))
 		case http.MethodPatch:
-			router.PATCH(route.Pattern, route.HandlerGenerator(nil, contentStore))
+			router.PATCH(route.Pattern, route.HandlerGenerator(
+				postStore,
+				contentStore,
+			))
 		case http.MethodDelete:
-			router.DELETE(route.Pattern, route.HandlerGenerator(nil, contentStore))
+			router.DELETE(route.Pattern, route.HandlerGenerator(
+				postStore,
+				contentStore,
+			))
 		}
 	}
 
