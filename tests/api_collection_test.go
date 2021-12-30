@@ -34,26 +34,30 @@ func TestCreatePost(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		router := core.NewRouter(core.Config{})
+		tc := tc
 
-		for index, post := range tc.withPosts {
-			raw, err := json.Marshal(post)
-			assert.NoError(t, err)
+		t.Run(tc.name, func(t *testing.T) {
+			router := core.NewRouter(core.Config{})
 
-			request := httptest.NewRequest(
-				http.MethodPost,
-				"/posts",
-				bytes.NewReader(raw),
-			)
+			for index, post := range tc.withPosts {
+				raw, err := json.Marshal(post)
+				assert.NoError(t, err)
 
-			request.Header.Add("Content-Type", "application/json")
+				request := httptest.NewRequest(
+					http.MethodPost,
+					"/posts",
+					bytes.NewReader(raw),
+				)
 
-			recorder := httptest.NewRecorder()
+				request.Header.Add("Content-Type", "application/json")
 
-			router.ServeHTTP(recorder, request)
+				recorder := httptest.NewRecorder()
 
-			assert.Equal(t, tc.expectStatus[index], recorder.Code)
-		}
+				router.ServeHTTP(recorder, request)
+
+				assert.Equal(t, tc.expectStatus[index], recorder.Code)
+			}
+		})
 	}
 }
 
@@ -115,35 +119,37 @@ func TestGetAllPosts(t *testing.T) {
 	for _, tc := range testCases {
 		tc := tc
 
-		router := core.NewRouter(core.Config{})
+		t.Run(tc.name, func(t *testing.T) {
+			router := core.NewRouter(core.Config{})
 
-		for _, post := range tc.withPosts {
-			createPost(t, router, post)
-		}
+			for _, post := range tc.withPosts {
+				createPost(t, router, &post)
+			}
 
-		request := httptest.NewRequest(http.MethodGet, "/posts", nil)
+			request := httptest.NewRequest(http.MethodGet, "/posts", nil)
 
-		recorder := httptest.NewRecorder()
+			recorder := httptest.NewRecorder()
 
-		router.ServeHTTP(recorder, request)
+			router.ServeHTTP(recorder, request)
 
-		assert.Equal(t, http.StatusOK, recorder.Code)
+			assert.Equal(t, http.StatusOK, recorder.Code)
 
-		var returnedPosts []models.Post
+			var returnedPosts []models.Post
 
-		err := json.Unmarshal(recorder.Body.Bytes(), &returnedPosts)
-		assert.NoError(t, err)
+			err := json.Unmarshal(recorder.Body.Bytes(), &returnedPosts)
+			assert.NoError(t, err)
 
-		for index := range returnedPosts {
-			assert.NotEmpty(t, returnedPosts[index].Id)
-			assert.NotEmpty(t, returnedPosts[index].Time)
+			for index := range returnedPosts {
+				assert.NotEmpty(t, returnedPosts[index].Id)
+				assert.NotEmpty(t, returnedPosts[index].Time)
 
-			returnedPosts[index].Id = ""
-			returnedPosts[index].Time = ""
-		}
+				returnedPosts[index].Id = ""
+				returnedPosts[index].Time = ""
+			}
 
-		for _, post := range tc.expectPosts {
-			assert.Contains(t, returnedPosts, post)
-		}
+			for _, post := range tc.expectPosts {
+				assert.Contains(t, returnedPosts, post)
+			}
+		})
 	}
 }
