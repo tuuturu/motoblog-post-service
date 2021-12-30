@@ -7,7 +7,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/deifyed/post-service/pkg/core"
@@ -56,21 +55,6 @@ func TestCreatePost(t *testing.T) {
 			assert.Equal(t, tc.expectStatus[index], recorder.Code)
 		}
 	}
-}
-
-func createPost(t *testing.T, router *gin.Engine, post models.Post) {
-	raw, err := json.Marshal(post)
-	assert.NoError(t, err)
-
-	request := httptest.NewRequest(
-		http.MethodPost,
-		"/posts",
-		bytes.NewReader(raw),
-	)
-
-	request.Header.Add("Content-Type", "application/json")
-
-	router.ServeHTTP(httptest.NewRecorder(), request)
 }
 
 func TestGetAllPosts(t *testing.T) {
