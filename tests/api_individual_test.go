@@ -1,7 +1,6 @@
 package tests
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -76,10 +75,7 @@ func TestGetIndividualPost(t *testing.T) {
 				return
 			}
 
-			var result models.Post
-
-			err := json.Unmarshal(recorder.Body.Bytes(), &result)
-			assert.NoError(t, err)
+			result := bytesToPost(t, recorder.Body.Bytes())
 
 			assert.NotEmpty(t, result.Id)
 			assert.NotEmpty(t, result.Time)
@@ -88,6 +84,67 @@ func TestGetIndividualPost(t *testing.T) {
 			result.Time = ""
 
 			assert.Equal(t, tc.expectResult, &result)
+		})
+	}
+}
+
+func TestUpdatePost(t *testing.T) {
+	testCases := []struct {
+		name             string
+		withExistingPost models.Post
+		withUpdate       models.Post
+
+		expectStatus int
+		expectResult models.Post
+	}{
+		{
+			name: "Should return 200 and the updated object on successful update",
+
+			withExistingPost: models.Post{
+				Title:   "This hear is a post",
+				Content: "Not happy with the title",
+			},
+			withUpdate: models.Post{
+				Title:   "I mean, HERE is the post",
+				Content: "Thats btetter",
+			},
+			expectStatus: http.StatusOK,
+			expectResult: models.Post{
+				Title:   "I mean, HERE is the post",
+				Content: "Thats btetter",
+			},
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+
+		t.Run(tc.name, func(t *testing.T) {
+			router := core.NewRouter(core.Config{})
+
+			id := createPost(t, router, &tc.withExistingPost)
+
+			request := httptest.NewRequest(
+				http.MethodPatch,
+				fmt.Sprintf("/posts/%s", id),
+				postAsReader(t, tc.withUpdate),
+			)
+			request.Header.Add("Content-Type", "application/json")
+
+			recorder := httptest.NewRecorder()
+			router.ServeHTTP(recorder, request)
+
+			assert.Equal(t, tc.expectStatus, recorder.Code)
+
+			result := bytesToPost(t, recorder.Body.Bytes())
+
+			assert.NotEmpty(t, result.Id)
+			assert.NotEmpty(t, result.Time)
+
+			result.Id = ""
+			result.Time = ""
+
+			assert.Equal(t, tc.expectResult, result)
 		})
 	}
 }
