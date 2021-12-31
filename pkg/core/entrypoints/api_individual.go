@@ -88,6 +88,8 @@ func GetPost(postStore stores.PostStore, contentStore stores.ContentStore) gin.H
 // UpdatePost -
 func UpdatePost(postStore stores.PostStore, contentStore stores.ContentStore) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		id := c.Param("id")
+
 		var updatedPost models.Post
 
 		err := c.Bind(&updatedPost)
@@ -98,6 +100,8 @@ func UpdatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 
 			return
 		}
+
+		updatedPost.Id = id
 
 		originalPost, err := postStore.GetPost(updatedPost.Id)
 		if err != nil {
