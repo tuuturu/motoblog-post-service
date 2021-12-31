@@ -148,3 +148,59 @@ func TestUpdatePost(t *testing.T) {
 		})
 	}
 }
+
+func TestDeletePost(t *testing.T) {
+	testCases := []struct {
+		name string
+
+		withExistingPost *models.Post
+		withIDToDelete   func(string) string
+
+		expectStatus int
+	}{
+		{
+			name: "Should return 204 on successfull deletion",
+			withExistingPost: &models.Post{
+				Title:   "Not happpy with this post",
+				Content: "It barely has any content",
+			},
+			withIDToDelete: func(original string) string {
+				return original
+			},
+			expectStatus: http.StatusNoContent,
+		},
+		{
+			name:             "Should return 404 on missing post",
+			withExistingPost: nil,
+			withIDToDelete: func(_ string) string {
+				return "eae818ac-a4d8-4a96-bd9c-5ab1dc33039c"
+			},
+			expectStatus: http.StatusNotFound,
+		},
+	}
+
+	for _, tc := range testCases {
+		tc := tc
+
+		t.Run(tc.name, func(t *testing.T) {
+			var id string
+			router := core.NewRouter(core.Config{})
+
+			if tc.withExistingPost != nil {
+				id = createPost(t, router, tc.withExistingPost)
+			}
+
+			request := httptest.NewRequest(
+				http.MethodDelete,
+				fmt.Sprintf("/posts/%s", tc.withIDToDelete(id)),
+				nil,
+			)
+			request.Header.Add("Content-Type", "application/json")
+
+			recorder := httptest.NewRecorder()
+			router.ServeHTTP(recorder, request)
+
+			assert.Equal(t, tc.expectStatus, recorder.Code)
+		})
+	}
+}
