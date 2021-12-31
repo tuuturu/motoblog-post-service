@@ -21,7 +21,13 @@ func DeletePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 		if err != nil {
 			log.Printf("unable to delete post: %s", err.Error())
 
-			c.Status(http.StatusInternalServerError)
+			status := http.StatusInternalServerError
+
+			if errors.Is(err, stores.ErrNotFound) {
+				status = http.StatusNotFound
+			}
+
+			c.Status(status)
 
 			return
 		}
@@ -30,7 +36,13 @@ func DeletePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 		if err != nil {
 			log.Printf("unable to delete content: %s", err.Error())
 
-			c.Status(http.StatusInternalServerError)
+			status := http.StatusInternalServerError
+
+			if errors.Is(err, stores.ErrNotFound) {
+				status = http.StatusNotFound
+			}
+
+			c.Status(status)
 
 			return
 		}
