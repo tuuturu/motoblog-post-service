@@ -3,6 +3,7 @@ package tests
 import (
 	"bytes"
 	"encoding/json"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -38,4 +39,20 @@ func createPost(t *testing.T, router *gin.Engine, post *models.Post) string {
 	assert.NoError(t, err)
 
 	return result.Id
+}
+
+func postAsReader(t *testing.T, post models.Post) io.Reader {
+	raw, err := json.Marshal(post)
+	assert.NoError(t, err)
+
+	return bytes.NewReader(raw)
+}
+
+func bytesToPost(t *testing.T, raw []byte) models.Post {
+	var result models.Post
+
+	err := json.Unmarshal(raw, &result)
+	assert.NoError(t, err)
+
+	return result
 }
