@@ -8,7 +8,8 @@ import (
 type getFn func(string) string
 
 type Config struct {
-	Port int
+	Port       int
+	LegalHosts []string
 }
 
 type HandlerGeneratorFn func(stores.PostStore, stores.ContentStore) gin.HandlerFunc

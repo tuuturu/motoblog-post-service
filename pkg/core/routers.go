@@ -6,17 +6,20 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/deifyed/post-service/pkg/core/entrypoints"
+	"github.com/deifyed/post-service/pkg/middleware"
 	"github.com/deifyed/post-service/pkg/stores"
 	contentMemoryStore "github.com/deifyed/post-service/pkg/stores/content/memory"
 	postMemoryStore "github.com/deifyed/post-service/pkg/stores/post/memory"
 )
 
 // NewRouter returns a new router.
-func NewRouter(_ Config) *gin.Engine {
+func NewRouter(cfg Config) *gin.Engine {
 	router := gin.Default()
 
 	postStore := postMemoryStore.New()
 	contentStore := contentMemoryStore.New()
+
+	router.Use(middleware.Cors(middleware.CorsOptions{LegalHosts: cfg.LegalHosts}))
 
 	for _, route := range routes {
 		switch route.Method {
