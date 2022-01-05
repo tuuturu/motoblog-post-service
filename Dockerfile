@@ -18,5 +18,5 @@ ENV GIN_MODE=release
 EXPOSE 3000/tcp
 ENTRYPOINT ["./service"]
 
-COPY --from=build /go/src/post-service ./
+COPY --from=build /go/src/service ./
 
