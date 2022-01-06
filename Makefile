@@ -1,5 +1,6 @@
 
 fmt:
+	@goimports -w .
 	@gofmt -w .
 
 test:
