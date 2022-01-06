@@ -2,8 +2,9 @@ package stores
 
 import (
 	"errors"
-	"github.com/deifyed/post-service/pkg/models"
 	"io"
+
+	"github.com/deifyed/post-service/pkg/models"
 )
 
 var ErrNotFound = errors.New("not found")
