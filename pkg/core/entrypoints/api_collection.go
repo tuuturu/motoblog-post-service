@@ -26,7 +26,7 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 		// Validate
 
 		post.Id = uuid.New().String()
-		post.Time = time.Now().String()
+		post.Time = time.Now().Format(time.RFC3339)
 
 		err = contentStore.StoreContent(
 			post.Id,
