@@ -17,4 +17,7 @@ type Post struct {
 
 	// The images related to the post
 	Images []string `json:"images,omitempty"`
+
+	// Coordinates defines the geographical point the post is centered around
+	Coordinates Coordinates `json:"coordinates,omitempty"`
 }
