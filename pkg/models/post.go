@@ -14,4 +14,7 @@ type Post struct {
 
 	// The content of the post
 	Content string `json:"content,omitempty"`
+
+	// The images related to the post
+	Images []string `json:"images,omitempty"`
 }

@@ -120,6 +120,14 @@ components:
           type: string
           description: The content of the post
           example: What an amazing trip! Some days have been long. Some have been way too short.
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of images related to the post
+          example:
+          - https://via.placeholder.com/150x150
+          - https://via.placeholder.com/150x150
 
   responses:
     401:
