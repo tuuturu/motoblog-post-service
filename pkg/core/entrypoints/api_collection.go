@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/deifyed/post-service/pkg/log"
 	"github.com/deifyed/post-service/pkg/models"
 	"github.com/deifyed/post-service/pkg/stores"
 	"github.com/gin-gonic/gin"
@@ -14,10 +15,13 @@ import (
 // CreatePost -
 func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		logger := log.GetLogger("entrypoints", "createPost")
 		var post models.Post
 
 		err := c.Bind(&post)
 		if err != nil {
+			logger.Errorf("binding post: %s", err.Error())
+
 			c.Status(http.StatusBadRequest)
 
 			return
@@ -33,6 +37,8 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 			bytes.NewBuffer([]byte(post.Content)),
 		)
 		if err != nil {
+			logger.Errorf("storing content: %s", err.Error())
+
 			c.Status(http.StatusInternalServerError)
 
 			return
@@ -42,6 +48,8 @@ func CreatePost(postStore stores.PostStore, contentStore stores.ContentStore) gi
 
 		err = postStore.AddPost(post)
 		if err != nil {
+			logger.Errorf("storing post: %s", err.Error())
+
 			c.Status(http.StatusInternalServerError)
 
 			return
