@@ -4,6 +4,14 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+func (receiver *Logger) Debug(args ...interface{}) {
+	receiver.entry.Debug(args...)
+}
+
+func (receiver *Logger) Debugf(format string, args ...interface{}) {
+	receiver.entry.Debugf(format, args...)
+}
+
 func (receiver *Logger) Errorf(format string, args ...interface{}) {
 	receiver.entry.Errorf(format, args...)
 }

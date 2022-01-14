@@ -1,6 +1,8 @@
 package log
 
 type Logger interface {
+	Debug(args ...interface{})
+	Debugf(format string, args ...interface{})
 	Errorf(format string, args ...interface{})
 	Infof(format string, args ...interface{})
 }
@@ -8,6 +10,7 @@ type Logger interface {
 type Level string
 
 const (
-	LevelError = iota
+	LevelDebug = iota
+	LevelError
 	LevelInfo
 )
