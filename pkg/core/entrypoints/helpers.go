@@ -1,7 +1,7 @@
 package entrypoints
 
 import (
-	"github.com/deifyed/post-service/pkg/models"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
 )
 
 const maxTruncatedLength = 160

@@ -4,7 +4,7 @@ import (
 	"errors"
 	"io"
 
-	"github.com/deifyed/post-service/pkg/models"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
 )
 
 var ErrNotFound = errors.New("not found")

@@ -7,9 +7,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/deifyed/post-service/pkg/models"
-	"github.com/deifyed/post-service/pkg/stores"
 	"github.com/gin-gonic/gin"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
+	"github.com/tuuturu/motoblog-post-service/pkg/stores"
 )
 
 // DeletePost -

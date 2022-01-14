@@ -5,11 +5,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/deifyed/post-service/pkg/core/entrypoints"
-	"github.com/deifyed/post-service/pkg/middleware"
-	"github.com/deifyed/post-service/pkg/stores"
-	contentMemoryStore "github.com/deifyed/post-service/pkg/stores/content/memory"
-	postMemoryStore "github.com/deifyed/post-service/pkg/stores/post/memory"
+	"github.com/tuuturu/motoblog-post-service/pkg/core/entrypoints"
+	"github.com/tuuturu/motoblog-post-service/pkg/middleware"
+	"github.com/tuuturu/motoblog-post-service/pkg/stores"
+	contentMemoryStore "github.com/tuuturu/motoblog-post-service/pkg/stores/content/memory"
+	postMemoryStore "github.com/tuuturu/motoblog-post-service/pkg/stores/post/memory"
 )
 
 // NewRouter returns a new router.

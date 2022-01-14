@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/deifyed/post-service/pkg/stores"
+	"github.com/tuuturu/motoblog-post-service/pkg/stores"
 )
 
 func (receiver *store) StoreContent(id string, content io.Reader) error {

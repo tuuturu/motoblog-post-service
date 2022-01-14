@@ -1,4 +1,4 @@
-module github.com/deifyed/post-service
+module github.com/tuuturu/motoblog-post-service
 
 go 1.16
 

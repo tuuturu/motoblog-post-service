@@ -9,8 +9,8 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/deifyed/post-service/pkg/core"
-	"github.com/deifyed/post-service/pkg/models"
+	"github.com/tuuturu/motoblog-post-service/pkg/core"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
 )
 
 func TestCreatePost(t *testing.T) {

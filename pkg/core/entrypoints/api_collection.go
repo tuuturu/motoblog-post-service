@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/deifyed/post-service/pkg/log"
-	"github.com/deifyed/post-service/pkg/models"
-	"github.com/deifyed/post-service/pkg/stores"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"github.com/tuuturu/motoblog-post-service/pkg/log"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
+	"github.com/tuuturu/motoblog-post-service/pkg/stores"
 )
 
 // CreatePost -

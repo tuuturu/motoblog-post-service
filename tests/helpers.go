@@ -8,9 +8,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/deifyed/post-service/pkg/models"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
 )
 
 func createPost(t *testing.T, router *gin.Engine, post *models.Post) string {

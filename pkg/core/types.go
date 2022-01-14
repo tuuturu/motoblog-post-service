@@ -1,8 +1,8 @@
 package core
 
 import (
-	"github.com/deifyed/post-service/pkg/stores"
 	"github.com/gin-gonic/gin"
+	"github.com/tuuturu/motoblog-post-service/pkg/stores"
 )
 
 type getFn func(string) string

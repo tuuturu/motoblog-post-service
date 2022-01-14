@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/deifyed/post-service/pkg/core"
-	"github.com/deifyed/post-service/pkg/models"
 	"github.com/stretchr/testify/assert"
+	"github.com/tuuturu/motoblog-post-service/pkg/core"
+	"github.com/tuuturu/motoblog-post-service/pkg/models"
 )
 
 func TestGetIndividualPost(t *testing.T) {

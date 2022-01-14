@@ -1,6 +1,6 @@
 package memory
 
-import "github.com/deifyed/post-service/pkg/models"
+import "github.com/tuuturu/motoblog-post-service/pkg/models"
 
 type store struct {
 	db map[string]models.Post

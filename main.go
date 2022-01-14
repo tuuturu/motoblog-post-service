@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	core "github.com/deifyed/post-service/pkg/core"
+	core "github.com/tuuturu/motoblog-post-service/pkg/core"
 
 	"fmt"
 	"os"

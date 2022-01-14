@@ -3,8 +3,8 @@ package log
 import (
 	"os"
 
-	logrusWrapper "github.com/deifyed/post-service/pkg/log/logrus"
 	"github.com/sirupsen/logrus"
+	logrusWrapper "github.com/tuuturu/motoblog-post-service/pkg/log/logrus"
 )
 
 func GetLogger(component string, activity string) Logger {
